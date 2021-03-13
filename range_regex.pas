@@ -20,13 +20,13 @@ uses
   , System.Generics.Collections
   ;
 
-function bounded_regex_for_range(min_, max_: Integer): String;
-function regex_for_range(min_, max_: Integer): String;
-function split_to_patterns(min_, max_: Integer): TStrings;
-function split_to_ranges(min_, max_: Integer): TList<Integer>;
-function fill_by_nines(integer_, nines_count: Integer): Integer;
-function fill_by_zeros(integer_, zeros_count: Integer): Integer;
-function range_to_pattern(start, stop: Integer): String;
+function bounded_regex_for_range(min_, max_: Int64): String;
+function regex_for_range(min_, max_: Int64): String;
+function split_to_patterns(min_, max_: Int64): TStrings;
+function split_to_ranges(min_, max_: Int64): TList<Int64>;
+function fill_by_nines(integer_, nines_count: Int64): Int64;
+function fill_by_zeros(integer_, zeros_count: Int64): Int64;
+function range_to_pattern(start, stop: Int64): String;
 
 
 implementation
@@ -40,16 +40,16 @@ uses
 def bounded_regex_for_range(min_, max_):
     return r'\b({})\b'.format(regex_for_range(min_, max_))
 *)
-function bounded_regex_for_range(min_, max_: Integer): String;
+function bounded_regex_for_range(min_, max_: Int64): String;
 begin
   Result := Format('\b(%s)\b', [regex_for_range(min_, max_)]);
 end;
 
 
-function regex_for_range(min_, max_: Integer): String;
+function regex_for_range(min_, max_: Int64): String;
 var
-  min__: Integer;
-  max__: Integer;
+  min__: Int64;
+  max__: Int64;
   negative_subpatterns: TStrings;
   positive_subpatterns: TStrings;
   negative_only_subpatterns: TStrings;
@@ -149,12 +149,12 @@ begin
 end;
 
 
-function split_to_patterns(min_, max_: Integer): TStrings;
+function split_to_patterns(min_, max_: Int64): TStrings;
 var
   subpatterns: TStrings;
-  start: Integer;
-  stop: Integer;
-  ranges: TList<Integer>;
+  start: Int64;
+  stop: Int64;
+  ranges: TList<Int64>;
 begin
   //subpatterns = []
   subpatterns := TStringList.Create;
@@ -183,15 +183,15 @@ begin
 end;
 
 
-function split_to_ranges(min_, max_: Integer): TList<Integer>;
+function split_to_ranges(min_, max_: Int64): TList<Int64>;
 var
-  stops: TList<Integer>;
-  nines_count: Integer;
-  stop: Integer;
-  zeros_count: Integer;
+  stops: TList<Int64>;
+  nines_count: Int64;
+  stop: Int64;
+  zeros_count: Int64;
 begin
   //stops = {max_}
-  stops := TList<Integer>.Create;
+  stops := TList<Int64>.Create;
   stops.Add(max_);
 
   //nines_count = 1
@@ -244,12 +244,12 @@ begin
   Result := stops;
 end;
 
-function fill_by_nines(integer_, nines_count: Integer): Integer;
+function fill_by_nines(Integer_, nines_count: Int64): Int64;
 var
   str: String;
 begin
-  //return int(str(integer_)[:-nines_count] + '9' * nines_count)
-  str := IntToStr(integer_);
+  //return int(str(Int64_)[:-nines_count] + '9' * nines_count)
+  str := IntToStr(Integer_);
   Result := StrToInt(
     Copy(str, 1, Length(str) - nines_count)
      + Copy('9999999999999999999', 1, nines_count)
@@ -257,32 +257,32 @@ begin
 end;
 
 
-function fill_by_zeros(integer_, zeros_count: Integer): Integer;
+function fill_by_zeros(Integer_, zeros_count: Int64): Int64;
 var
-  idx: Integer;
-  pow: Integer;
+  idx: Int64;
+  pow: Int64;
 begin
-  //return integer - integer % 10 ** zeros_count
+  //return Int64 - Int64 % 10 ** zeros_count
   pow := 1;
   for idx := 1 to zeros_count do
     pow := pow * 10;
-  result := integer_ - integer_ mod pow;
+  result := Integer_ - Integer_ mod pow;
 end;
 
 
-function range_to_pattern(start, stop: Integer): String;
+function range_to_pattern(start, stop: Int64): String;
 var
   pattern: String;
-  any_digit_count: Integer;
+  any_digit_count: Int64;
   start_digit: Char;
   stop_digit: Char;
 
   str_start: String;
   str_stop: String;
-  idx: Integer;
-  str_start_len: Integer;
-  str_stop_len: Integer;
-  len: Integer;
+  idx: Int64;
+  str_start_len: Int64;
+  str_stop_len: Int64;
+  len: Int64;
 begin
   //pattern = ''
   //any_digit_count = 0
