@@ -13,7 +13,8 @@ uses
   DUnitX.Loggers.Xml.NUnit,
   {$ENDIF }
   DUnitX.TestFramework,
-  range_regex_test in 'range_regex_test.pas';
+  range_regex_test in 'range_regex_test.pas',
+  range_regex in '..\range_regex.pas';
 
 {$IFNDEF TESTINSIGHT}
 var
