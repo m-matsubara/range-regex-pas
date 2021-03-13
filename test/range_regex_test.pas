@@ -59,7 +59,8 @@ type
     procedure test_small_diff;
     [Test]
     procedure test_different_len_zero_one_nine;
-
+    [Test]
+    procedure TestAddSpecification;
   end;
 
 implementation
@@ -119,6 +120,7 @@ begin
   Assert.AreEqual(regex_for_range(-999, 999), '-[1-9]|-?[1-9]\d|-?[1-9]\d{2}|\d', 'regex_for_range(-999, 999)');
   Assert.AreEqual(regex_for_range(-9999, 9999), '-[1-9]|-?[1-9]\d|-?[1-9]\d{2}|-?[1-9]\d{3}|\d', 'regex_for_range(-9999, 9999)');
 end;
+
 
 procedure TMyTestObject.TestEqual;
 var
@@ -273,6 +275,37 @@ begin
   self._verify_range(regex, 999, 10000, 1, 20000);
 end;
 
+
+// matsubara Delphi version original specification
+procedure TMyTestObject.TestAddSpecification;
+var
+  RegExStr: String;
+  RegEx: TRegEx;
+  idx: Integer;
+begin
+  Assert.AreEqual(regex_for_range(-999, 999, True), '-0*[1-9]|-?0*[1-9]\d|-?0*[1-9]\d{2}|0*\d', 'regex_for_range(-999, 999, True)');
+  Assert.AreEqual(regex_for_range(-9999, 9999, True), '-0*[1-9]|-?0*[1-9]\d|-?0*[1-9]\d{2}|-?0*[1-9]\d{3}|0*\d', 'regex_for_range(-9999, 9999, True)');
+
+  RegExStr := regex_for_range(-15, 99, True);
+  RegEx := TRegEx.Create(RegExStr, []);
+  for idx := 1 to 15 do
+  begin
+    Assert.IsTrue(RegEx.IsMatch('-' + IntToStr(idx)), 'Failure: ''' + RegExStr + ''' (expect true) : ' + IntToStr(idx));
+    Assert.IsTrue(RegEx.IsMatch('-0' + IntToStr(idx)), 'Failure: ''' + RegExStr + ''' (expect true) : ' + IntToStr(idx));
+    Assert.IsTrue(RegEx.IsMatch('-00' + IntToStr(idx)), 'Failure: ''' + RegExStr + ''' (expect true) : ' + IntToStr(idx));
+    Assert.IsTrue(RegEx.IsMatch('-000' + IntToStr(idx)), 'Failure: ''' + RegExStr + ''' (expect true) : ' + IntToStr(idx));
+  end;
+  Assert.IsTrue(RegEx.IsMatch('0'), 'Failure: ''' + RegExStr + ''' (expect true) : ' + IntToStr(idx));
+  Assert.IsTrue(RegEx.IsMatch('00' + IntToStr(idx)), 'Failure: ''' + RegExStr + ''' (expect true) : ' + IntToStr(idx));
+  Assert.IsTrue(RegEx.IsMatch('000' + IntToStr(idx)), 'Failure: ''' + RegExStr + ''' (expect true) : ' + IntToStr(idx));
+  for idx := 1 to 99 do
+  begin
+    Assert.IsTrue(RegEx.IsMatch(IntToStr(idx)), 'Failure: ''' + RegExStr + ''' (expect true) : ' + IntToStr(idx));
+    Assert.IsTrue(RegEx.IsMatch('0' + IntToStr(idx)), 'Failure: ''' + RegExStr + ''' (expect true) : ' + IntToStr(idx));
+    Assert.IsTrue(RegEx.IsMatch('00' + IntToStr(idx)), 'Failure: ''' + RegExStr + ''' (expect true) : ' + IntToStr(idx));
+    Assert.IsTrue(RegEx.IsMatch('000' + IntToStr(idx)), 'Failure: ''' + RegExStr + ''' (expect true) : ' + IntToStr(idx));
+  end;
+end;
 
 initialization
   TDUnitX.RegisterTestFixture(TMyTestObject);

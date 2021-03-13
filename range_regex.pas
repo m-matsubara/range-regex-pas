@@ -20,8 +20,8 @@ uses
   , System.Generics.Collections
   ;
 
-function bounded_regex_for_range(min_, max_: Int64): String;
-function regex_for_range(min_, max_: Int64): String;
+function bounded_regex_for_range(min_, max_: Int64; pre0: Boolean = False): String;
+function regex_for_range(min_, max_: Int64; pre0: Boolean = False): String;
 function split_to_patterns(min_, max_: Int64): TStrings;
 function split_to_ranges(min_, max_: Int64): TList<Int64>;
 function fill_by_nines(integer_, nines_count: Int64): Int64;
@@ -40,13 +40,13 @@ uses
 def bounded_regex_for_range(min_, max_):
     return r'\b({})\b'.format(regex_for_range(min_, max_))
 *)
-function bounded_regex_for_range(min_, max_: Int64): String;
+function bounded_regex_for_range(min_, max_: Int64; pre0: Boolean): String;
 begin
-  Result := Format('\b(%s)\b', [regex_for_range(min_, max_)]);
+  Result := Format('\b(%s)\b', [regex_for_range(min_, max_, pre0)]);
 end;
 
 
-function regex_for_range(min_, max_: Int64): String;
+function regex_for_range(min_, max_: Int64; pre0: Boolean): String;
 var
   min__: Int64;
   max__: Int64;
@@ -56,7 +56,14 @@ var
   positive_only_subpatterns: TStrings;
   subpatterns: TStrings;
   val: String;
+  pre0Str: String;
 begin
+  // matsubara Delphi version original specification
+  if (pre0) then
+    pre0Str := '0*'
+  else
+    pre0Str := '';
+
   negative_subpatterns := nil;
   positive_subpatterns := nil;
   negative_only_subpatterns := nil;
@@ -110,7 +117,7 @@ begin
     for val in negative_subpatterns do
     begin
       if (positive_subpatterns.IndexOf(val) < 0) then
-        negative_only_subpatterns.Add('-' + val);
+        negative_only_subpatterns.Add('-' + pre0Str + val);
     end;
 
     //positive_only_subpatterns = [val for val in positive_subpatterns if val not in negative_subpatterns]
@@ -118,7 +125,7 @@ begin
     for val in positive_subpatterns do
     begin
       if (negative_subpatterns.IndexOf(val) < 0) then
-        positive_only_subpatterns.Add(val);
+        positive_only_subpatterns.Add(pre0Str + val);
     end;
 
     (*
@@ -132,7 +139,7 @@ begin
     for val in negative_subpatterns do
     begin
       if (positive_subpatterns.IndexOf(val) >= 0) then
-        subpatterns.Add('-?' + val);
+        subpatterns.Add('-?' + pre0Str + val);
     end;
     subpatterns.AddStrings(positive_only_subpatterns);
 
