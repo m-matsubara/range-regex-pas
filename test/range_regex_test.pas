@@ -14,8 +14,7 @@ type
     procedure Setup;
     [TearDown]
     procedure TearDown;
-    // Sample Methods
-    // Simple single Test
+
     procedure _verify_range(RegExStr: String; min, max, from_min, to_max: Int64);
 
     [Test]

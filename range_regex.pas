@@ -250,9 +250,9 @@ var
 begin
   //return int(str(Int64_)[:-nines_count] + '9' * nines_count)
   str := IntToStr(Integer_);
-  Result := StrToInt(
+  Result := StrToInt64(
     Copy(str, 1, Length(str) - nines_count)
-     + Copy('9999999999999999999', 1, nines_count)
+     + Copy('99999999999999999999', 1, nines_count)
     );
 end;
 
