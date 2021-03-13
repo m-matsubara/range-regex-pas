@@ -3,9 +3,6 @@
         <ProjectGuid>{B75C54F7-1CA9-4C82-B7A4-7F8FB4CF66CD}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
-        <Projects Include="range_regex_pas.dproj">
-            <Dependencies/>
-        </Projects>
         <Projects Include="test\range_regex_test_project.dproj">
             <Dependencies/>
         </Projects>
@@ -17,15 +14,6 @@
             <Default.Personality/>
         </BorlandProject>
     </ProjectExtensions>
-    <Target Name="range_regex_pas">
-        <MSBuild Projects="range_regex_pas.dproj"/>
-    </Target>
-    <Target Name="range_regex_pas:Clean">
-        <MSBuild Projects="range_regex_pas.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="range_regex_pas:Make">
-        <MSBuild Projects="range_regex_pas.dproj" Targets="Make"/>
-    </Target>
     <Target Name="range_regex_test_project">
         <MSBuild Projects="test\range_regex_test_project.dproj"/>
     </Target>
@@ -36,13 +24,13 @@
         <MSBuild Projects="test\range_regex_test_project.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="range_regex_pas;range_regex_test_project"/>
+        <CallTarget Targets="range_regex_test_project"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="range_regex_pas:Clean;range_regex_test_project:Clean"/>
+        <CallTarget Targets="range_regex_test_project:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="range_regex_pas:Make;range_regex_test_project:Make"/>
+        <CallTarget Targets="range_regex_test_project:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
