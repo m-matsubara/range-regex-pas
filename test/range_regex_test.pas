@@ -127,7 +127,7 @@ var
   regex: String;
 begin
   regex := bounded_regex_for_range(1, 1);
-  self._verify_range(regex, 1, 1, 0, 100);
+  self._verify_range(regex,        1, 1, 0, 100);
 end;
 
 procedure TMyTestObject.TestEqual_2;
@@ -135,7 +135,7 @@ var
   regex: String;
 begin
   regex := bounded_regex_for_range(65443, 65443);
-  self._verify_range(regex, 65443, 65443, 65000, 66000);
+  self._verify_range(regex,        65443, 65443, 65000, 66000);
 end;
 
 procedure TMyTestObject.TestEqual_3;
@@ -143,8 +143,8 @@ var
   regex: String;
 begin
   regex := bounded_regex_for_range(192, 100020000300000);
-  self._verify_range(regex, 192, 1000, 0, 1000);
-  self._verify_range(regex, Int64(100019999300000), Int64(100020000300000), Int64(100019999300000), Int64(100020000400000));
+  self._verify_range(regex,        192, 100020000300000, 0, 1000);
+  self._verify_range(regex,        192, 100020000300000, 100019999200000, 100020000400000);
 end;
 
 procedure TMyTestObject.test_repeated_digit;
@@ -152,7 +152,7 @@ var
   regex: String;
 begin
   regex := bounded_regex_for_range(10331, 20381);
-  self._verify_range(regex, 10331, 20381, 0, 99999);
+  self._verify_range(regex,        10331, 20381, 0, 99999);
 end;
 
 procedure TMyTestObject.test_repeated_zeros;
@@ -160,7 +160,7 @@ var
   regex: String;
 begin
   regex := bounded_regex_for_range(10031, 20081);
-  self._verify_range(regex, 10031, 20081, 0, 99999);
+  self._verify_range(regex,        10031, 20081, 0, 99999);
 end;
 
 procedure TMyTestObject.test_zero_one;
@@ -168,7 +168,7 @@ var
   regex: String;
 begin
   regex := bounded_regex_for_range(10301, 20101);
-  self._verify_range(regex, 10301, 20101, 0, 99999);
+  self._verify_range(regex,        10301, 20101, 0, 99999);
 end;
 
 procedure TMyTestObject.test_different_len_numbers_1;
@@ -176,7 +176,7 @@ var
   regex: String;
 begin
   regex := bounded_regex_for_range(1030, 20101);
-  self._verify_range(regex, 1030, 20101, 0, 99999);
+  self._verify_range(regex,        1030, 20101, 0, 99999);
 end;
 
 procedure TMyTestObject.test_repetead_one;
@@ -184,7 +184,7 @@ var
   regex: String;
 begin
   regex := bounded_regex_for_range(102, 111);
-  self._verify_range(regex, 102, 111, 0, 1000);
+  self._verify_range(regex,        102, 111, 0, 1000);
 end;
 
 procedure TMyTestObject.test_small_diff_1;
@@ -192,7 +192,7 @@ var
   regex: String;
 begin
   regex := bounded_regex_for_range(102, 110);
-  self._verify_range(regex, 102, 110, 0, 1000);
+  self._verify_range(regex,        102, 110, 0, 1000);
 end;
 
 procedure TMyTestObject.test_small_diff_2;
@@ -200,7 +200,7 @@ var
   regex: String;
 begin
   regex := bounded_regex_for_range(102, 130);
-  self._verify_range(regex, 102, 130, 0, 1000);
+  self._verify_range(regex,        102, 130, 0, 1000);
 end;
 
 procedure TMyTestObject.test_random_range_1;
@@ -208,7 +208,7 @@ var
   regex: String;
 begin
   regex := bounded_regex_for_range(4173, 7981);
-  self._verify_range(regex, 4173, 7981, 0, 99999);
+  self._verify_range(regex,        4173, 7981, 0, 99999);
 end;
 
 procedure TMyTestObject.test_one_digit_numbers;
@@ -216,7 +216,7 @@ var
   regex: String;
 begin
   regex := bounded_regex_for_range(3, 7);
-  self._verify_range(regex, 3, 7, 0, 99);
+  self._verify_range(regex,        3, 7, 0, 99);
 end;
 
 procedure TMyTestObject.test_one_digit_at_bounds;
@@ -224,7 +224,7 @@ var
   regex: String;
 begin
   regex := bounded_regex_for_range(1, 9);
-  self._verify_range(regex, 1, 9, 0, 1000);
+  self._verify_range(regex,        1, 9, 0, 1000);
 end;
 
 procedure TMyTestObject.test_power_of_ten;
@@ -232,7 +232,7 @@ var
   regex: String;
 begin
   regex := bounded_regex_for_range(1000, 8632);
-  self._verify_range(regex, 1000, 8632, 0, 99999);
+  self._verify_range(regex,        1000, 8632, 0, 99999);
 end;
 
 procedure TMyTestObject.test_different_len_numbers_2;
@@ -240,7 +240,7 @@ var
   regex: String;
 begin
   regex := bounded_regex_for_range(13, 8632);
-  self._verify_range(regex, 13, 8632, 0, 10000);
+  self._verify_range(regex,        13, 8632, 0, 10000);
 end;
 
 procedure TMyTestObject.test_different_len_numbers_small_diff;
@@ -248,7 +248,7 @@ var
   regex: String;
 begin
   regex := bounded_regex_for_range(9, 11);
-  self._verify_range(regex, 9, 11, 0, 100);
+  self._verify_range(regex,        9, 11, 0, 100);
 end;
 
 procedure TMyTestObject.test_different_len_zero_eight_nine;
@@ -256,7 +256,7 @@ var
   regex: String;
 begin
   regex := bounded_regex_for_range(90, 980099);
-  self._verify_range(regex, 90, 980099, 0, 999999);
+  self._verify_range(regex,        90, 980099, 0, 999999);
 end;
 
 procedure TMyTestObject.test_small_diff;
@@ -264,7 +264,7 @@ var
   regex: String;
 begin
   regex := bounded_regex_for_range(19, 21);
-  self._verify_range(regex, 19, 21, 0, 100);
+  self._verify_range(regex,        19, 21, 0, 100);
 end;
 
 procedure TMyTestObject.test_different_len_zero_one_nine;
@@ -272,7 +272,7 @@ var
   regex: String;
 begin
   regex := bounded_regex_for_range(999, 10000);
-  self._verify_range(regex, 999, 10000, 1, 20000);
+  self._verify_range(regex,        999, 10000, 1, 20000);
 end;
 
 
